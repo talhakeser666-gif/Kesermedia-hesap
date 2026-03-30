@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>KUTSALKESER | V2</title>
+    <style>
+        :root {
+            --primary: #ff0000;
+            --bg: #0a0a0a;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            background-color: var(--bg);
+            color: #fff;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0; padding: 0;
+            background-image: radial-gradient(circle at 50% 0%, #330000 0%, #0a0a0a 70%);
+            overflow-x: hidden;
+        }
+
+        .top-status {
+            background: var(--primary);
+            padding: 12px 15px;
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 11px; font-weight: 900;
+        }
+        .dot { height: 8px; width: 8px; background: #fff; border-radius: 50%; display: inline-block; margin-right: 6px; animation: blink 1s infinite; }
+
+        nav { padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
+        .logo { font-size: 20px; font-weight: 900; letter-spacing: 1px; color: #fff; }
+        .logo span { color: var(--primary); }
+
+        .container { max-width: 420px; margin: 0 auto; padding-bottom: 40px; }
+
+        .purpose-box {
+            margin: 20px 15px; padding: 25px;
+            background: var(--glass); border-left: 4px solid var(--primary); border-radius: 4px 20px 20px 4px;
+            backdrop-filter: blur(10px);
+        }
+        .purpose-box h2 { font-size: 13px; color: var(--primary); margin: 0 0 10px 0; letter-spacing: 1px; }
+        .purpose-box p { font-size: 11px; color: #aaa; line-height: 1.6; margin: 0; }
+
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 15px; }
+        .stat-card { background: #000; border: 1px solid var(--border); border-radius: 15px; padding: 15px; text-align: center; }
+        .stat-val { font-size: 18px; font-weight: 900; color: #fff; }
+        .stat-lbl { font-size: 9px; color: #555; text-transform: uppercase; margin-top: 5px; }
+
+        .main-panel { background: rgba(255,255,255,0.01); border-radius: 30px; padding: 25px; border: 1px solid var(--border); margin: 0 15px; }
+        label { font-size: 10px; font-weight: 800; color: #444; display: block; margin: 0 0 10px 5px; text-transform: uppercase; }
+        
+        select {
+            width: 100%; background: #000; color: #fff; border: 1px solid #222;
+            padding: 16px; border-radius: 15px; font-size: 15px; outline: none; margin-bottom: 20px;
+        }
+
+        .duration-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 25px; }
+        .dur-opt { background: #0a0a0a; border: 1px solid #222; padding: 15px; border-radius: 15px; text-align: center; cursor: pointer; }
+        .dur-opt.active { border-color: var(--primary); background: rgba(255,0,0,0.05); color: var(--primary); font-weight: 900; }
+
+        .order-btn {
+            width: 100%; padding: 18px; background: var(--primary); color: #fff;
+            border: none; border-radius: 18px; font-size: 15px; font-weight: 900; cursor: pointer;
+            box-shadow: 0 10px 25px rgba(255,0,0,0.3);
+        }
+
+        #result-area { display: none; margin-top: 30px; animation: slideIn 0.5s ease; }
+        .res-card { 
+            background: #050505; 
+            border: 1px solid var(--primary); border-radius: 25px; padding: 25px; 
+            text-align: center;
+        }
+        .res-badge { background: rgba(37, 211, 102, 0.1); color: #25d366; font-size: 9px; padding: 5px 12px; border-radius: 20px; font-weight: 900; margin-bottom: 20px; display: inline-block; }
+        
+        .res-display { background: rgba(255,255,255,0.02); border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid #111; }
+        
+        .res-main-val { 
+            font-family: 'Inter', -apple-system, sans-serif; 
+            font-size: 16px; 
+            font-weight: 700; 
+            color: #ffffff; 
+            letter-spacing: 0.5px; 
+            margin: 8px 0; 
+            display: block;
+            word-break: break-word;
+        }
+        .res-sub-lbl { font-size: 9px; color: #555; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 800; }
+
+        .wa-btn { display: block; background: #25d366; color: #000; text-decoration: none; padding: 14px; border-radius: 12px; font-size: 13px; font-weight: 900; }
+
+        footer { margin-top: 50px; padding: 30px 20px; background: #000; border-top: 1px solid #111; text-align: center; }
+        .f-logo { font-size: 18px; font-weight: 900; color: #fff; margin-bottom: 10px; display: block; letter-spacing: 2px; }
+        .f-logo span { color: var(--primary); }
+
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <div class="top-status">
+        <span>V2 | KUTSALKESER</span>
+        <span><span class="dot"></span>SİSTEM AKTİF</span>
+    </div>
+
+    <nav>
+        <div class="logo">KUTSAL<span>KESER</span></div>
+        <button style="background:none; border:1px solid #333; color:#fff; padding:8px 12px; border-radius:10px; font-size:9px;">SİPARİŞLERİM (<span id="badge">0</span>)</button>
+    </nav>
+
+    <div class="container">
+        <div class="purpose-box">
+            <h2>BU PANEL NE İŞE YARAR?</h2>
+            <p>SMM panel hesaplarının yarı fiyatına profesyonel hizmet sunulmaktadır. Kurumsal stok erişimi ile indirimli premium üyelikler anında oluşturulur.</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card"><span class="stat-val">5.8k+</span><span class="stat-lbl">AKTİF DATA</span></div>
+            <div class="stat-card"><span class="stat-val" id="limit-val">10 / 10</span><span class="stat-lbl">GÜNLÜK HAK</span></div>
+        </div>
+
+        <div class="main-panel">
+            <label>PLATFORM SEÇİMİ</label>
+            <select id="p_select">
+                <option value="Netflix">🎬 Netflix</option>
+                <option value="HBO Max">🍿 HBO Max</option>
+                <option value="Amazon Prime">📦 Amazon Prime</option>
+                <option value="Disney+">🏰 Disney+</option>
+                <option value="Exxen">⚽ Exxen</option>
+            </select>
+
+            <label>ABONELİK PLANI</label>
+            <div class="duration-selector">
+                <div class="dur-opt active" id="d1" onclick="setD(1)"><span>1 AY</span></div>
+                <div class="dur-opt" id="d12" onclick="setD(12)"><span>12 AY</span></div>
+            </div>
+
+            <button class="order-btn" id="o-btn" onclick="go()">HESABI TESLİM AL</button>
+
+            <div id="result-area">
+                <div class="res-card">
+                    <div class="res-badge">HESAP HAZIRLANDI</div>
+                    
+                    <div class="res-display">
+                        <span class="res-sub-lbl">MAİL ADRESİ</span>
+                        <span class="res-main-val" id="u_res"></span>
+                        
+                        <div style="margin: 15px 0; border-top: 1px dashed #222;"></div>
+                        
+                        <span class="res-sub-lbl">Şifre</span>
+                        <span class="res-main-val" style="color:var(--primary); letter-spacing: 3px;">********</span>
+                    </div>
+
+                    <div style="padding-top: 10px;">
+                        <p style="font-size:10px; color:#666; margin-bottom:15px;">İŞLEM NO: <span id="o_id" style="color:#fff; font-weight:800;"></span></p>
+                        <p style="font-size:11px; color:#fff; font-weight:600; margin-bottom:12px;">⚠️ Lütfen Sipariş Numarası ile WhatsApp üzerinden yazınız.</p>
+                        <a href="https://wa.me/905302031328" class="wa-btn">💬 ADMİNE YAZ & ONAY AL</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <span class="f-logo">KUTSAL<span>KESER</span></span>
+        <div style="font-size: 10px; color: #444;">© 2026 KUTSALKESER | ENTERPRISE V2</div>
+    </footer>
+
+    <script>
+        let limit = 10, total = 0, currentD = 1;
+        function setD(v) { currentD = v; document.getElementById('d1').classList.remove('active'); document.getElementById('d12').classList.remove('active'); document.getElementById('d'+v).classList.add('active'); }
+        
+        function go() {
+            if(limit <= 0) return alert("Limit doldu.");
+            const btn = document.getElementById('o-btn');
+            btn.innerText = "İŞLENİYOR...";
+            
+            setTimeout(() => {
+                const sid = Math.floor(100000 + Math.random() * 900000);
+                const mail = "S" + "********" + "@gmail.com";
+
+                document.getElementById('o_id').innerText = "#" + sid;
+                document.getElementById('u_res').innerText = mail;
+                document.getElementById('result-area').style.display = "block";
+                
+                btn.innerText = "YENİ HESAP AL";
+                limit--; total++;
+                document.getElementById('limit-val').innerText = limit + " / 10";
+                document.getElementById('badge').innerText = total;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
